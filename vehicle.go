@@ -98,9 +98,10 @@ func readJSONFile() Values {
 
 	return content
 }
-
 func generateRating() {
+
 	f := readJSONFile()
+
 	for _, v := range f.Models {
 		var vehResult feedbackResult
 		var vehRating rating
@@ -116,9 +117,10 @@ func generateRating() {
 						vehRating += positive
 					case "not helpful", "sad", "angry", "improve", "annoy":
 						vehRating += negative
+					case "pathetic", "bad", "worse", "unfortunately", "agitated", "frustrated":
+						vehRating += extraNegative
 					}
 				}
-
 				switch {
 				case vehRating > 8.0:
 					vehResult.feedbackPositive++
@@ -129,7 +131,6 @@ func generateRating() {
 				}
 			}
 		}
-
 		vehicleResult[v.Name] = vehResult
 	}
 }
